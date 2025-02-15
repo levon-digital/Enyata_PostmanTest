@@ -1,0 +1,541 @@
+{
+	"info": {
+		"_postman_id": "d219a5db-ef95-46ce-ab12-44aab892743b",
+		"name": "Enyata_Assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40868222",
+		"_collection_link": "https://determinas-qa.postman.co/workspace/Determinas-QA-Workspace~a3fe506b-5eeb-416d-8258-0f472ef469aa/collection/40868222-d219a5db-ef95-46ce-ab12-44aab892743b?action=share&source=collection_link&creator=40868222"
+	},
+	"item": [
+		{
+			"name": "Create_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" const jsonData = pm.response.json();\r",
+							" console.log(jsonData.code);\r",
+							" console.log(jsonData.message);\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Check that valid CODE is returned\", function () {\r",
+							"    if(jsonData.code != undefined){\r",
+							"  pm.expect(jsonData.code, 'The CODE returned is: ' + jsonData.code).to.eql(200);\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The CODE  is not returned as part of the response body')\r",
+							"    }\r",
+							" \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that the valid message is returned\", function () {\r",
+							"    if(jsonData.message != undefined){\r",
+							"  pm.expect(jsonData.message, 'The message returned is: ' + jsonData.message).to.eql('7');\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The error message is not returned as part of the response body')\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 7,\r\n  \"username\": \"{{$randomUserName}}\",\r\n  \"firstName\": \"{{$randomFullName}}\",\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"Password\",\r\n  \"phone\": \"{{$randomPhoneNumber}}\",\r\n  \"userStatus\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/v2/user",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"v2",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_List_of_users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" const jsonData = pm.response.json();\r",
+							" console.log(jsonData.code);\r",
+							" console.log(jsonData.message);\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Check that valid CODE is returned\", function () {\r",
+							"    if(jsonData.code != undefined){\r",
+							"  pm.expect(jsonData.code, 'The CODE returned is: ' + jsonData.code).to.eql(200);\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The CODE  is not returned as part of the response body')\r",
+							"    }\r",
+							" \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that the valid message is returned\", function () {\r",
+							"    if(jsonData.message != undefined){\r",
+							"  pm.expect(jsonData.message, 'The message returned is: ' + jsonData.message).to.eql('ok');\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The error message is not returned as part of the response body')\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n   \"id\": 20,\r\n  \"username\": \"{{$randomUserName}}\",\r\n  \"firstName\": \"{{$randomFullName}}\",\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"Password\",\r\n  \"phone\": \"{{$randomPhoneNumber}}\",\r\n  \"userStatus\": 90\r\n  },\r\n\r\n{\r\n     \"id\": 15,\r\n  \"username\": \"{{$randomUserName}}\",\r\n  \"firstName\": \"{{$randomFullName}}\",\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"Password\",\r\n  \"phone\": \"{{$randomPhoneNumber}}\",\r\n  \"userStatus\": 16\r\n  }\r\n  \r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/v2/user/createWithArray",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"createWithArray"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							" console.log(jsonData.code);\r",
+							" console.log(jsonData.message);\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Check that valid CODE is returned\", function () {\r",
+							"    if(jsonData.code != undefined){\r",
+							"  pm.expect(jsonData.code, 'The CODE returned is: ' + jsonData.code).to.eql(200);\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The CODE  is not returned as part of the response body')\r",
+							"    }\r",
+							" \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/v2/user/login?username={{username}}&password={{password}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/v2/user/user1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"user1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_user_with_invalid_username",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" const jsonData = pm.response.json();\r",
+							" console.log(jsonData.code);\r",
+							" console.log(jsonData.message);\r",
+							"\r",
+							"pm.test(\"Response status code is 404\", function () {\r",
+							"  pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Check that valid CODE is returned\", function () {\r",
+							"    if(jsonData.code != undefined){\r",
+							"  pm.expect(jsonData.code, 'The CODE returned is: ' + jsonData.code).to.eql(1);\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The CODE  is not returned as part of the response body')\r",
+							"    }\r",
+							" \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that the valid message is returned\", function () {\r",
+							"    if(jsonData.message != undefined){\r",
+							"  pm.expect(jsonData.message, 'The message returned is: ' + jsonData.message).to.eql('User not found');\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The error message is not returned as part of the response body')\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/v2/user/user1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"user1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" const jsonData = pm.response.json();\r",
+							" console.log(jsonData.code);\r",
+							" console.log(jsonData.message);\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Check that valid CODE is returned\", function () {\r",
+							"    if(jsonData.code != undefined){\r",
+							"  pm.expect(jsonData.code, 'The CODE returned is: ' + jsonData.code).to.eql(200);\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The CODE  is not returned as part of the response body')\r",
+							"    }\r",
+							" \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that the valid message is returned\", function () {\r",
+							"    if(jsonData.message != undefined){\r",
+							"  pm.expect(jsonData.message, 'The message returned is: ' + jsonData.message).to.eql('ok');\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The error message is not returned as part of the response body')\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/v2/user/logout",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/v2/user/Userdame",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"Userdame"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							" console.log(jsonData.code);\r",
+							" console.log(jsonData.message);\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Check that valid CODE is returned\", function () {\r",
+							"    if(jsonData.code != undefined){\r",
+							"  pm.expect(jsonData.code, 'The CODE returned is: ' + jsonData.code).to.eql(200);\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The CODE  is not returned as part of the response body')\r",
+							"    }\r",
+							" \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that the valid message is returned\", function () {\r",
+							"    if(jsonData.message != undefined){\r",
+							"  pm.expect(jsonData.message, 'The message returned is: ' + jsonData.message).to.eql('7');\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The error message is not returned as part of the response body')\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 7,\r\n  \"username\": \"{{$randomUserName}}\",\r\n  \"firstName\": \"{{$randomFullName}}\",\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"Password\",\r\n  \"phone\": \"{{$randomPhoneNumber}}\",\r\n  \"userStatus\": 9\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/v2/user/{{username}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_with_array",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							" console.log(jsonData.code);\r",
+							" console.log(jsonData.message);\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Check that valid CODE is returned\", function () {\r",
+							"    if(jsonData.code != undefined){\r",
+							"  pm.expect(jsonData.code, 'The CODE returned is: ' + jsonData.code).to.eql(200);\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The CODE  is not returned as part of the response body')\r",
+							"    }\r",
+							" \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that the valid message is returned\", function () {\r",
+							"    if(jsonData.message != undefined){\r",
+							"  pm.expect(jsonData.message, 'The message returned is: ' + jsonData.message).to.eql('ok');\r",
+							"    }\r",
+							"    else{\r",
+							"        throw new Error('The error message is not returned as part of the response body')\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": 8,\r\n    \"username\": \"{{$randomUserName}}\",\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"email\": \"{{$randomEmail\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"phone\": \"{{$randomPhoneNumber}}\",\r\n    \"userStatus\": 4\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/v2/user/createWithList",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"v2",
+						"user",
+						"createWithList"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
